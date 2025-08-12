@@ -97,24 +97,18 @@ function renderCustomers(customersToRender) {
         return;
     }
 
-    tbody.innerHTML = customersToRender.map(customer => `
+    tbody.innerHTML = clientsToRender.map(client => `
                 <tr class="fade-in">
-                    <td>${customer.customer_id}</td>
-                    <td>${customer.customer_name}</td>
-                    <td>${customer.email || 'N/A'}</td>
-                    <td>${customer.phone || 'N/A'}</td>
-                    <td>${customer.city || 'N/A'}</td>
+                    <td>${client.client_id}</td>
+                    <td>${client.name}</td>
+                    <td>${client.email || 'N/A'}</td>
+                    <td>${client.phone || 'N/A'}</td>
+                    <td>${client.city || 'N/A'}</td>
                     <td>
-                        <span class="status-badge status-${customer.status}">
-                            ${customer.status.charAt(0).toUpperCase() + customer.status.slice(1)}
-                        </span>
-                    </td>
-                    <td>${formatDate(customer.registration_date)}</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-1" onclick="editCustomer(${customer.customer_id})">
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="editCustomer(${client.client_id})">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteCustomer(${customer.customer_id})">
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteCustomer(${client.client_id})">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -124,16 +118,12 @@ function renderCustomers(customersToRender) {
 
 function filterCustomers() {
     const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
-    const statusFilter = document.getElementById('statusFilter').value;
 
-    let filtered = customers.filter(customer => {
+    let filtered = clients.filter(client => {
         const matchesSearch =
-            customer.customer_name.toLowerCase().includes(searchTerm) ||
-            (customer.email && customer.email.toLowerCase().includes(searchTerm)) ||
-            (customer.phone && customer.phone.includes(searchTerm));
-
-        const matchesStatus = !statusFilter || customer.status === statusFilter;
-
+            client.name.toLowerCase().includes(searchTerm) ||
+            (client.email && client.email.toLowerCase().includes(searchTerm)) ||
+            (client.phone && client.phone.includes(searchTerm));
         return matchesSearch && matchesStatus;
     });
 
