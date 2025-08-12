@@ -41,9 +41,9 @@ async function testConnection() {
     }
 }
 
-// CUSTOMERS CRUD ENDPOINTS
+// CLIENT CRUD ENDPOINTS
 
-// GET all customers
+// GET all clients
 app.get('/api/clients', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM clients ORDER BY created_at DESC'); // CAMBIO: Usamos pool.query
@@ -53,7 +53,7 @@ app.get('/api/clients', async (req, res) => {
     }
 });
 
-// GET customer by ID
+// GET client by ID
 app.get('/api/clients/:id', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM client WHERE client_id = $1', [req.params.id]); // CAMBIO: Placeholder $1
@@ -66,7 +66,7 @@ app.get('/api/clients/:id', async (req, res) => {
     }
 });
 
-// POST create customer
+// POST create client
 app.post('/api/clients', async (req, res) => {
     try {
         const { name, number_document, address, phone, email } = req.body;
@@ -93,7 +93,7 @@ app.post('/api/clients', async (req, res) => {
     }
 });
 
-// PUT update customer
+// PUT update client
 app.put('/api/clients/:id', async (req, res) => {
     try {
         const { name, number_document, address, phone, email } = req.body;
@@ -118,14 +118,14 @@ app.put('/api/clients/:id', async (req, res) => {
     }
 });
 
-// DELETE customer
+// DELETE client
 app.delete('/api/customers/:id', async (req, res) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
-        await client.query('DELETE FROM transactions WHERE invoice_id IN (SELECT invoice_id FROM invoices WHERE customer_id = $1)', [req.params.id]);
-        await client.query('DELETE FROM invoices WHERE customer_id = $1', [req.params.id]);
-        const result = await client.query('DELETE FROM customers WHERE customer_id = $1', [req.params.id]);
+        await client.query('DELETE FROM transactions WHERE transaction_id IN (SELECT transaction_id FROM transaction WHERE customer_id = $1)', [req.params.id]);
+        await client.query('DELETE FROM transactions WHERE customer_id = $1', [req.params.id]);
+        const result = await client.query('DELETE FROM clients WHERE client_id = $1', [req.params.id]);
         
         if (result.rowCount === 0) {
             await client.query('ROLLBACK');

@@ -9,35 +9,21 @@ This system follows a normalized relational database design applying the first t
 ## 🚀 Technologies Used
 
 - **Backend**: Node.js with Express.js
-- **Database**: MySQL
+- **Database**: PostgreSQL
 - **Frontend**: HTML5, Bootstrap 5, JavaScript (Vanilla)
 - **File Processing**: CSV-Parser, Multer
 - **API Testing**: Postman
 
 ## 📊 Database Normalization Process
 
-### First Normal Form (1NF)
-- Eliminated repeating groups in original Excel data
-- Ensured atomic values in all columns
-- Created unique identifiers for each record
-
-### Second Normal Form (2NF)
-- Removed partial dependencies
-- Separated customer, invoice, transaction, and platform data
-- Established proper foreign key relationships
-
-### Third Normal Form (3NF)
-- Eliminated transitive dependencies
-- Ensured all non-key attributes depend directly on primary keys
-- Optimized data storage and reduced redundancy
+PENDIENTE
 
 ## 🗃️ Database Schema
 
 ### Tables Structure
-- **customers**: Customer information and registration details
-- **invoices**: Invoice data with payment tracking
+- **clients**: Client information and registration details
 - **transactions**: Individual payment transactions
-- **platforms**: Fintech platform information (Nequi, Daviplata, etc.)
+- **bills**: Information about the invoices
 
 ![Database Model](docs/relational_model.png)
 
@@ -48,10 +34,12 @@ This system follows a normalized relational database design applying the first t
 - MySQL Server (v8.0 or higher)
 - Git
 
+### Open the terminal of your 
+
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/yourusername/fintech-management-system.git
-cd fintech-management-system
+git clone https://github.com/Oomass7/assesment-module-4.git
+cd assesment-module-4.git
 ```
 
 ### 2. Install Dependencies
@@ -65,8 +53,8 @@ npm install
 mysql -u root -p
 
 -- Create database
-CREATE DATABASE pd_juan_perez_clan;
-USE pd_juan_perez_clan;
+CREATE DATABASE pd_jose_loaiza_van_rossum;
+USE pd_jose_loaiza_van_rossum;
 
 -- Run DDL script
 source database_ddl.sql;
@@ -83,7 +71,7 @@ Edit `.env` file:
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_password
-DB_NAME=pd_juan_perez_clan
+DB_NAME=pd_jose_loaiza_van_rossum
 PORT=3000
 ```
 

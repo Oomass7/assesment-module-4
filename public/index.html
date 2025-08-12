@@ -80,11 +80,6 @@
                         <i class="fas fa-chart-bar me-2"></i>Reports & Analytics
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="bulk-load-tab" data-bs-toggle="tab" data-bs-target="#bulk-load" type="button" role="tab">
-                        <i class="fas fa-upload me-2"></i>Bulk Data Load
-                    </button>
-                </li>
             </ul>
 
             <!-- Tab Content -->
@@ -118,11 +113,10 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Email</th>
+                                            <th>Number document</th>
+                                            <th>Address</th>
                                             <th>Phone</th>
-                                            <th>City</th>
-                                            <th>Status</th>
-                                            <th>Registration Date</th>
+                                            <th>Email</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -203,8 +197,6 @@
                                         <option value="">All Platforms</option>
                                         <option value="Nequi">Nequi</option>
                                         <option value="Daviplata">Daviplata</option>
-                                        <option value="PSE">PSE</option>
-                                        <option value="Bancolombia">Bancolombia</option>
                                     </select>
                                 </div>
                                 <div class="card-body">
@@ -213,7 +205,6 @@
                                             <thead>
                                                 <tr>
                                                     <th>Reference</th>
-                                                    <th>Platform</th>
                                                     <th>Customer</th>
                                                     <th>Invoice</th>
                                                     <th>Amount</th>
@@ -223,74 +214,6 @@
                                             </thead>
                                             <tbody id="transactionsByPlatformBody"></tbody>
                                         </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bulk Load Tab -->
-                <div class="tab-pane fade" id="bulk-load" role="tabpanel">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0"><i class="fas fa-upload me-2"></i>Bulk Data Load from CSV</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h6>Instructions:</h6>
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-check text-success me-2"></i>Upload a CSV file with customer and transaction data</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Ensure the CSV has the required columns</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>The system will automatically create customers, invoices, and transactions</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Duplicate entries will be handled gracefully</li>
-                                    </ul>
-
-                                    <div class="mb-3">
-                                        <label for="csvFile" class="form-label">Choose CSV File</label>
-                                        <input type="file" class="form-control" id="csvFile" accept=".csv" required>
-                                    </div>
-
-                                    <button type="button" class="btn btn-primary-custom btn-custom" onclick="uploadCSV()">
-                                        <i class="fas fa-upload me-2"></i>Upload and Process
-                                    </button>
-
-                                    <div id="uploadProgress" class="mt-3" style="display: none;">
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
-                                        </div>
-                                        <small class="text-muted">Processing CSV file...</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card bg-light">
-                                        <div class="card-header">
-                                            <h6 class="mb-0">Required CSV Columns</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <small>
-                                                <strong>Customer Info:</strong><br>
-                                                • customer_name<br>
-                                                • email<br>
-                                                • phone<br>
-                                                • address<br>
-                                                • city<br>
-                                                • registration_date<br><br>
-                                                
-                                                <strong>Invoice Info:</strong><br>
-                                                • invoice_number<br>
-                                                • total_amount<br>
-                                                • issue_date<br>
-                                                • due_date<br><br>
-                                                
-                                                <strong>Transaction Info:</strong><br>
-                                                • platform_name<br>
-                                                • transaction_reference<br>
-                                                • transaction_amount<br>
-                                                • transaction_date
-                                            </small>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -314,35 +237,24 @@
                         <input type="hidden" id="customerId">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="customerName" class="form-label">Customer Name *</label>
+                                <label for="customerName" class="form-label">Client name*</label>
                                 <input type="text" class="form-control" id="customerName" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="customerEmail" class="form-label">Email</label>
+                                <label for="customerEmail" class="form-label">Number document</label>
                                 <input type="email" class="form-control" id="customerEmail">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="customerPhone" class="form-label">Phone</label>
+                                <label for="customerPhone" class="form-label">Address</label>
                                 <input type="text" class="form-control" id="customerPhone">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="customerCity" class="form-label">City</label>
+                                <label for="customerCity" class="form-label">Phone</label>
                                 <input type="text" class="form-control" id="customerCity">
                             </div>
                             <div class="col-12 mb-3">
-                                <label for="customerAddress" class="form-label">Address</label>
+                                <label for="customerAddress" class="form-label">Email</label>
                                 <textarea class="form-control" id="customerAddress" rows="2"></textarea>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="registrationDate" class="form-label">Registration Date *</label>
-                                <input type="date" class="form-control" id="registrationDate" required>
-                            </div>
-                            <div class="col-md-6 mb-3" id="statusGroup" style="display: none;">
-                                <label for="customerStatus" class="form-label">Status</label>
-                                <select class="form-select" id="customerStatus">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
                             </div>
                         </div>
                     </form>
