@@ -1,0 +1,317 @@
+{
+  "info": {
+    "name": "Fintech Management System API",
+    "description": "Complete API collection for testing Fintech Management System endpoints including CRUD operations and advanced queries",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Customer CRUD Operations",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_name\": \"Test Customer\",\n  \"email\": \"test@example.com\",\n  \"phone\": \"3001234567\",\n  \"address\": \"Test Address 123\",\n  \"city\": \"Medellín\",\n  \"registration_date\": \"2024-08-12\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_name\": \"Updated Customer Name\",\n  \"email\": \"updated@example.com\",\n  \"phone\": \"3009876543\",\n  \"address\": \"Updated Address 456\",\n  \"city\": \"Bogotá\",\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/customers/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Advanced Queries",
+      "item": [
+        {
+          "name": "Customer Payment Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/customer-payments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "reports", "customer-payments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pending Invoices Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/pending-invoices",
+              "host": ["{{base_url}}"],
+              "path": ["api", "reports", "pending-invoices"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transactions by Platform (All)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/transactions-by-platform",
+              "host": ["{{base_url}}"],
+              "path": ["api", "reports", "transactions-by-platform"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transactions by Platform (Nequi)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/transactions-by-platform?platform=Nequi",
+              "host": ["{{base_url}}"],
+              "path": ["api", "reports", "transactions-by-platform"],
+              "query": [
+                {
+                  "key": "platform",
+                  "value": "Nequi"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transactions by Platform (Daviplata)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/transactions-by-platform?platform=Daviplata",
+              "host": ["{{base_url}}"],
+              "path": ["api", "reports", "transactions-by-platform"],
+              "query": [
+                {
+                  "key": "platform",
+                  "value": "Daviplata"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bulk Operations",
+      "item": [
+        {
+          "name": "Bulk Load CSV",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "csvFile",
+                  "type": "file",
+                  "src": "/path/to/your/sample_data.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bulk-load",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-load"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Utility Endpoints",
+      "item": [
+        {
+          "name": "Get All Platforms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/platforms",
+              "host": ["{{base_url}}"],
+              "path": ["api", "platforms"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling Tests",
+      "item": [
+        {
+          "name": "Get Non-existent Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers/999999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "999999"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer with Invalid Data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_name\": \"\",\n  \"email\": \"invalid-email\",\n  \"registration_date\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer with Duplicate Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_name\": \"Duplicate Email Test\",\n  \"email\": \"juan.perez@email.com\",\n  \"phone\": \"3001234567\",\n  \"address\": \"Test Address\",\n  \"city\": \"Medellín\",\n  \"registration_date\": \"2024-08-12\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "noauth"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
