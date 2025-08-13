@@ -44,12 +44,11 @@ async function testConnection() {
 // CLIENT CRUD ENDPOINTS
 
 // GET all clients
-// GET all clients
 app.get('/api/clients', async (req, res) => {
     console.log('GET request to /api/clients received');
     try {
         // La consulta a la base de datos es correcta
-        const result = await pool.query('SELECT * FROM clients ORDER BY client_id DESC');
+        const result = await pool.query('SELECT * FROM clients ORDER BY client_id');
         console.log(`Found ${result.rows.length} clients`);
         // Se envía la respuesta con los datos
         res.json({ success: true, data: result.rows });

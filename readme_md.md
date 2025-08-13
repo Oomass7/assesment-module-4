@@ -16,7 +16,7 @@ This system follows a normalized relational database design applying the first t
 
 ## 📊 Database Normalization Process
 
-PENDIENTE
+I only create the tables and separate the necessary data in the differents tables. In this case, only three tables, and orgnaice waht is the primary keys and foreign keys
 
 ## 🗃️ Database Schema
 
@@ -25,7 +25,7 @@ PENDIENTE
 - **transactions**: Individual payment transactions
 - **bills**: Information about the invoices
 
-![Database Model](docs/relational_model.png)
+![alt text](<relational model.svg>)
 
 ## 🔧 Installation & Setup
 
@@ -88,129 +88,8 @@ The application will be available at `http://localhost:3000`
 
 ## 📱 Features
 
-### Customer Management (CRUD)
-- ✅ Create new customers with validation
-- ✅ Read customer information with filtering
-- ✅ Update customer details
-- ✅ Delete customers (with cascade to related records)
-
-### Advanced Reporting
-1. **Customer Payment Summary**: Total payments by customer
-2. **Pending Invoices Report**: Outstanding invoices with customer details
-3. **Platform Transaction Analysis**: Transactions filtered by payment platform
-
-### Bulk Data Loading
-- Upload CSV files with customer, invoice, and transaction data
-- Automatic data validation and processing
-- Error handling and reporting
-
-## 🔗 API Endpoints
-
-### Customer CRUD
-```http
-GET    /api/customers           # Get all customers
-GET    /api/customers/:id       # Get customer by ID
-POST   /api/customers           # Create new customer
-PUT    /api/customers/:id       # Update customer
-DELETE /api/customers/:id       # Delete customer
-```
-
-### Advanced Queries
-```http
-GET /api/reports/customer-payments     # Total paid by each customer
-GET /api/reports/pending-invoices      # Pending invoices with details
-GET /api/reports/transactions-by-platform?platform=Nequi  # Platform transactions
-```
-
-### Bulk Operations
-```http
-POST /api/bulk-load               # Upload CSV file for bulk processing
-```
-
-## 📋 CSV Bulk Load Instructions
-
-### CSV Format Requirements
-Your CSV file must include these columns:
-```
-customer_name, email, phone, address, city, registration_date,
-invoice_number, total_amount, paid_amount, invoice_status,
-issue_date, due_date, description, platform_name,
-transaction_reference, transaction_amount, transaction_date,
-transaction_status, notes
-```
-
-### Loading Process
-1. Prepare your CSV file with the required format
-2. Use the frontend upload interface or API endpoint
-3. The system will automatically:
-   - Validate data integrity
-   - Create customers (avoid duplicates by email)
-   - Generate invoices
-   - Process transactions
-   - Update payment statuses
-
-### Error Handling
-- Invalid data entries are logged and skipped
-- Duplicate entries are handled gracefully
-- Transaction rollback on critical errors
-
-## 🧪 API Testing with Postman
-
-Import the provided Postman collection: `postman/fintech_api.postman_collection.json`
-
-### Test Scenarios Included:
-- Customer CRUD operations
-- Advanced query validations
-- Error handling tests
-- Bulk upload functionality
-
-## 💾 Sample Data
-
-Sample CSV data is provided in `data/sample_data.csv` for testing purposes.
-
-## 🔒 Security Considerations
-
-- Input validation on all endpoints
-- SQL injection prevention through parameterized queries
-- File upload restrictions and validation
-- Error handling without information disclosure
-
-## 📈 Performance Optimizations
-
-- Database indexes on frequently queried columns
-- Connection pooling for database operations
-- Efficient SQL queries with proper JOINs
-- Pagination support for large datasets
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Database Connection Error:**
-- Verify MySQL service is running
-- Check database credentials in `.env`
-- Ensure database exists and DDL script was executed
-
-**CSV Upload Fails:**
-- Verify file format and required columns
-- Check file size limits
-- Ensure proper data types in CSV
-
-**Frontend Not Loading:**
-- Verify backend server is running on correct port
-- Check browser console for JavaScript errors
-- Ensure all static files are served correctly
-
-## 📊 Advanced Query Explanations
-
-### 1. Total Paid by Each Customer
-This query aggregates all completed transactions per customer, providing insights into customer value and payment behavior.
-
-### 2. Pending Invoices Report
-Identifies overdue or partially paid invoices with customer contact information for follow-up actions.
-
-### 3. Transactions by Platform
-Analyzes payment method preferences and platform performance, supporting business intelligence decisions.
+### Client Management (CRUD)
+- ✅ Read clients information with filtering
 
 ## 🤝 Contributing
 
@@ -220,16 +99,12 @@ Analyzes payment method preferences and platform performance, supporting busines
 4. Push to the branch
 5. Create a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👨‍💻 Developer Information
 
-- **Name**: Juan Perez
-- **Clan**: ExpertSoft Development Team
-- **Email**: juan.perez@expertsoft.com
-- **Project**: Fintech Management System - Module 4 Performance Test
+- **Name**: Tomas Loaiza
+- **Clan**: Van Rossum
+- **Email**: loaizarodrigueztomas@gmail.com
+- **Project**: Fintech Management System - Module 4 Assesment
 
 ## 📞 Support
 
