@@ -44,12 +44,18 @@ async function testConnection() {
 // CLIENT CRUD ENDPOINTS
 
 // GET all clients
+// GET all clients
 app.get('/api/clients', async (req, res) => {
+    console.log('GET request to /api/clients received');
     try {
-        const result = await pool.query('SELECT * FROM clients ORDER BY created_at DESC');
+        // La consulta a la base de datos es correcta
+        const result = await pool.query('SELECT * FROM clients ORDER BY client_id DESC');
+        console.log(`Found ${result.rows.length} clients`);
+        // Se envía la respuesta con los datos
         res.json({ success: true, data: result.rows });
     } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+        console.error('Error fetching clients:', error);
+        res.status(500).json({ success: false, error: 'Failed to fetch clients' });
     }
 });
 
@@ -255,7 +261,7 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, async () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
-    await testConnection();
+    await testConnection(); 
 });
 
 module.exports = app;

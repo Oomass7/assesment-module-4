@@ -5,13 +5,9 @@ const API_BASE = '/api';
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function () {
     loadCustomers();
-    loadStats();
-    loadReports();
 
     // Add event listeners
     document.getElementById('customerSearch').addEventListener('input', filterCustomers);
-    document.getElementById('statusFilter').addEventListener('change', filterCustomers);
-    document.getElementById('platformFilter').addEventListener('change', loadTransactionsByPlatform)
 });
 
 // Utility functions
@@ -26,7 +22,6 @@ function showAlert(message, type = 'success') {
             `;
     alertContainer.innerHTML = alertHtml;
 
-    // Auto hide after 5 seconds
     setTimeout(() => {
         const alert = alertContainer.querySelector('.alert');
         if (alert) {
@@ -57,11 +52,10 @@ async function apiCall(endpoint, options = {}) {
             },
             ...options
         });
-
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const error = await response.json();
+            throw new Error(error.error || `HTTP error! status: ${response.status}`);
         }
-
         return await response.json();
     } catch (error) {
         console.error('API call failed:', error);
@@ -72,7 +66,9 @@ async function apiCall(endpoint, options = {}) {
 // Customer functions
 async function loadCustomers() {
     try {
+        console.log('Attempting to load customers...');
         const response = await apiCall('/clients');
+        console.log('API response received:', response);
         customers = response.data;
         renderCustomers(customers);
     } catch (error) {
@@ -81,144 +77,37 @@ async function loadCustomers() {
 }
 
 function renderCustomers(customersToRender) {
-    const tbody = document.getElementById('customersTableBody');
-
-    if (customersToRender.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No customers found</td></tr>';
+    console.log('Rendering customers:', customersToRender);
+    const tableBody = document.getElementById('customersTableBody');
+    tableBody.innerHTML = '';
+    if (!customersToRender || customersToRender.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No se encontraron clientes.</td></tr>';
         return;
     }
-
-    tbody.innerHTML = clientsToRender.map(client => `
-                <tr class="fade-in">
-                    <td>${client.client_id}</td>
-                    <td>${client.name}</td>
-                    <td>${client.email || 'N/A'}</td>
-                    <td>${client.phone || 'N/A'}</td>
-                    <td>${client.email || 'N/A'}</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-1" onclick="editCustomer(${client.client_id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteCustomer(${client.client_id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-}
-
-function filterCustomers() {
-    const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
-
-    let filtered = clients.filter(client => {
-        const matchesSearch =
-            client.name.toLowerCase().includes(searchTerm) ||
-            (client.email && client.email.toLowerCase().includes(searchTerm)) ||
-            (client.phone && client.phone.includes(searchTerm));
-        return matchesSearch;
+    customersToRender.forEach(customer => {
+        const row = `
+            <tr>
+                <td>${customer.client_id}</td>
+                <td>${customer.name}</td>
+                <td>${customer.number_document}</td>
+                <td>${customer.adress}</td>
+                <td>${customer.phone}</td>
+                <td>${customer.email}</td>
+                <td>
+                    <button class="btn btn-sm btn-info me-2"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `;
+        tableBody.innerHTML += row;
     });
-    renderCustomers(filtered);
 }
 
-function openCustomerModal(client = null) {
-    const modal = new bootstrap.Modal(document.getElementById('customerModal'));
-    const form = document.getElementById('customerForm');
-
-    // Reset form
-    form.reset();
-    document.getElementById('customerId').value = '';
-
-    if (client) {
-        // Edit mode
-        document.getElementById('customerModalTitle').textContent = 'Edit Customer';
-        document.getElementById('customerId').value = client.client_id;
-        document.getElementById('customerName').value = client.name;
-        document.getElementById('customerEmail').value = client.email || '';
-        document.getElementById('customerPhone').value = client.phone || '';
-        document.getElementById('customerCity').value = client.city || '';
-        document.getElementById('customerAddress').value = client.address || '';
-    } else {
-        // Add mode
-        document.getElementById('customerModalTitle').textContent = 'Add New Customer';
-        document.getElementById('registrationDate').value = new Date().toISOString().split('T')[0];
-        document.getElementById('statusGroup').style.display = 'none';
-    }
-
-    modal.show();
-}
-
-async function editCustomer(customerId) {
-    const customer = customers.find(c => c.customer_id === customerId);
-    if (customer) {
-        openCustomerModal(customer);
-    }
-}
-
-async function saveCustomer() {
-    const customerId = document.getElementById('customerId').value;
-    const customerData = {
-        customer_name: document.getElementById('customerName').value,
-        email: document.getElementById('customerEmail').value,
-        phone: document.getElementById('customerPhone').value,
-        city: document.getElementById('customerCity').value,
-        address: document.getElementById('customerAddress').value,
-        registration_date: document.getElementById('registrationDate').value,
-        status: customerId ? document.getElementById('customerStatus').value : 'active'
-    };
-
-    // Basic validation
-    if (!customerData.customer_name || !customerData.registration_date) {
-        showAlert('Please fill in all required fields', 'danger');
-        return;
-    }
-
-    try {
-        let response;
-        if (customerId) {
-            // Update
-            response = await apiCall(`/customers/${customerId}`, {
-                method: 'PUT',
-                body: JSON.stringify(customerData)
-            });
-        } else {
-            // Create
-            response = await apiCall('/customers', {
-                method: 'POST',
-                body: JSON.stringify(customerData)
-            });
-        }
-
-        if (response.success) {
-            showAlert(customerId ? 'Customer updated successfully' : 'Customer created successfully');
-            bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide();
-            loadCustomers();
-            loadStats();
-        } else {
-            throw new Error(response.error);
-        }
-    } catch (error) {
-        showAlert('Failed to save customer: ' + error.message, 'danger');
-    }
-}
-
-async function deleteCustomer(customerId) {
-    if (!confirm('Are you sure you want to delete this customer? This will also delete all associated invoices and transactions.')) {
-        return;
-    }
-
-    try {
-        const response = await apiCall(`/customers/${customerId}`, {
-            method: 'DELETE'
-        });
-
-        if (response.success) {
-            showAlert('Customer deleted successfully');
-            loadCustomers();
-            loadStats();
-        } else {
-            throw new Error(response.error);
-        }
-    } catch (error) {
-        showAlert('Failed to delete customer: ' + error.message, 'danger');
-    }
+function filterCustomers(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredCustomers = customers.filter(customer =>
+        customer.name.toLowerCase().includes(searchTerm) ||
+        customer.number_document.toLowerCase().includes(searchTerm)
+    );
+    renderCustomers(filteredCustomers);
 }
