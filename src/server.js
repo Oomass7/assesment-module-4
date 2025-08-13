@@ -1,5 +1,5 @@
 const express = require('express');
-const { Pool } = require('pg'); // CAMBIO: Usamos pg en lugar de mysql2
+const { Pool } = require('pg');
 const cors = require('cors');
 const multer = require('multer');
 const csv = require('csv-parser');
@@ -28,7 +28,7 @@ const dbConfig = {
 };
 
 // Create connection pool
-const pool = new Pool(dbConfig); // CAMBIO: Usamos new Pool de pg
+const pool = new Pool(dbConfig);
 
 // Test database connection
 async function testConnection() {
@@ -46,8 +46,8 @@ async function testConnection() {
 // GET all clients
 app.get('/api/clients', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM clients ORDER BY created_at DESC'); // CAMBIO: Usamos pool.query
-        res.json({ success: true, data: result.rows }); // CAMBIO: El resultado está en .rows
+        const result = await pool.query('SELECT * FROM clients ORDER BY created_at DESC');
+        res.json({ success: true, data: result.rows });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
@@ -56,7 +56,7 @@ app.get('/api/clients', async (req, res) => {
 // GET client by ID
 app.get('/api/clients/:id', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM client WHERE client_id = $1', [req.params.id]); // CAMBIO: Placeholder $1
+        const result = await pool.query('SELECT * FROM client WHERE client_id = $1', [req.params.id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ success: false, error: 'Client not found' });
         }
@@ -76,7 +76,7 @@ app.post('/api/clients', async (req, res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO customers (name, number_document, address, phone, email) VALUES ($1, $2, $3, $4, $5) RETURNING client_id', // CAMBIO: Placeholders $1, $2, etc., y RETURNING
+            'INSERT INTO customers (name, number_document, address, phone, email) VALUES ($1, $2, $3, $4, $5) RETURNING client_id',
             [name, number_document, address, phone, email]
         );
 
@@ -125,7 +125,7 @@ app.delete('/api/customers/:id', async (req, res) => {
         await client.query('BEGIN');
         await client.query('DELETE FROM transactions WHERE transaction_id IN (SELECT transaction_id FROM transaction WHERE customer_id = $1)', [req.params.id]);
         await client.query('DELETE FROM transactions WHERE customer_id = $1', [req.params.id]);
-        const result = await client.query('DELETE FROM clients WHERE client_id = $1', [req.params.id]);
+        const result = await client.query('DELETE FROM clients WHERE customer_id = $1', [req.params.id]);
         
         if (result.rowCount === 0) {
             await client.query('ROLLBACK');

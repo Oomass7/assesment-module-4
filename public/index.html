@@ -30,7 +30,7 @@
         <div class="container-fluid p-4">
             <!-- Stats Cards -->
             <div class="row mb-4" id="statsContainer">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card stats-card">
                         <div class="card-body text-center">
                             <i class="fas fa-users fa-2x text-primary mb-2"></i>
@@ -39,30 +39,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card stats-card">
                         <div class="card-body text-center">
                             <i class="fas fa-file-invoice fa-2x text-success mb-2"></i>
                             <h5 class="card-title">Total Revenue</h5>
                             <h3 class="text-success" id="totalRevenue">-</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card stats-card">
-                        <div class="card-body text-center">
-                            <i class="fas fa-clock fa-2x text-warning mb-2"></i>
-                            <h5 class="card-title">Pending Invoices</h5>
-                            <h3 class="text-warning" id="pendingInvoices">-</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card stats-card">
-                        <div class="card-body text-center">
-                            <i class="fas fa-exchange-alt fa-2x text-info mb-2"></i>
-                            <h5 class="card-title">Today's Transactions</h5>
-                            <h3 class="text-info" id="todayTransactions">-</h3>
                         </div>
                     </div>
                 </div>
@@ -73,11 +55,6 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers" type="button" role="tab">
                         <i class="fas fa-users me-2"></i>Customer Management
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports" type="button" role="tab">
-                        <i class="fas fa-chart-bar me-2"></i>Reports & Analytics
                     </button>
                 </li>
             </ul>
@@ -130,92 +107,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reports Tab -->
-                <div class="tab-pane fade" id="reports" role="tabpanel">
-                    <div class="row">
-                        <!-- Customer Payments Report -->
-                        <div class="col-12 mb-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Customer Payment Summary</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer Name</th>
-                                                    <th>Email</th>
-                                                    <th>Total Paid</th>
-                                                    <th>Total Invoices</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="customerPaymentsBody"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Invoices Report -->
-                        <div class="col-12 mb-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Pending Invoices</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Invoice #</th>
-                                                    <th>Customer</th>
-                                                    <th>Total Amount</th>
-                                                    <th>Paid Amount</th>
-                                                    <th>Pending Amount</th>
-                                                    <th>Due Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="pendingInvoicesBody"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Transactions by Platform -->
-                        <div class="col-12 mb-4">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i>Transactions by Platform</h5>
-                                    <select class="form-select w-auto" id="platformFilter">
-                                        <option value="">All Platforms</option>
-                                        <option value="Nequi">Nequi</option>
-                                        <option value="Daviplata">Daviplata</option>
-                                    </select>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Reference</th>
-                                                    <th>Customer</th>
-                                                    <th>Invoice</th>
-                                                    <th>Amount</th>
-                                                    <th>Date</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="transactionsByPlatformBody"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
